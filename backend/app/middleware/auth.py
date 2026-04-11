@@ -1,14 +1,23 @@
-"""Keycloak JWT authentication middleware."""
-
+"""Authentication middleware and FastAPI dependency."""
 import os
+import uuid
 from typing import Optional
 
-from fastapi import HTTPException, Request, status
+from fastapi import Depends, HTTPException, Request, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.responses import Response
 
+from app.core.database import get_db
+from app.core.security import decode_token
+from app.models.user import User
+
 JWKS_URL = os.getenv("JWKS_URL", "")
 PUBLIC_PATHS = {"/health", "/ready", "/docs", "/openapi.json"}
+
+security = HTTPBearer()
 
 
 class AuthMiddleware(BaseHTTPMiddleware):
@@ -28,12 +37,6 @@ class AuthMiddleware(BaseHTTPMiddleware):
             )
 
         # TODO: Validate JWT using PyJWKClient against JWKS_URL
-        # from jwt import PyJWKClient
-        # jwks_client = PyJWKClient(JWKS_URL)
-        # signing_key = jwks_client.get_signing_key_from_jwt(token)
-        # decoded = jwt.decode(token, signing_key.key, algorithms=["RS256"])
-        # request.state.user = decoded
-
         return await call_next(request)
 
 
@@ -43,3 +46,21 @@ def _extract_bearer_token(request: Request) -> Optional[str]:
     if auth_header.startswith("Bearer "):
         return auth_header[7:]
     return None
+
+
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: AsyncSession = Depends(get_db),
+) -> User:
+    """FastAPI dependency: resolve the current user from a Bearer JWT."""
+    payload = decode_token(credentials.credentials)
+    if payload is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    user_id = payload.get("sub")
+    if user_id is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    result = await db.execute(select(User).where(User.id == uuid.UUID(user_id)))
+    user = result.scalar_one_or_none()
+    if user is None or not user.is_active:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    return user

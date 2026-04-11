@@ -1,3 +1,10 @@
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
 [project]
 name = "citadel-saas-factory"
 version = "3.0.0"
@@ -22,6 +29,7 @@ dependencies = [
     "structlog>=24.4.0",
     "guardrails-ai>=0.5.0",
     "deepeval>=1.5.0",
+    "email-validator>=2.1.0",
 ]
 
 [project.optional-dependencies]
