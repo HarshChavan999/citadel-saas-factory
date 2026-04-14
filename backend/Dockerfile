@@ -5,11 +5,10 @@ WORKDIR /app
 RUN adduser --disabled-password --gecos "" appuser
 
 COPY pyproject.toml .
+COPY app/ app/
 RUN pip install --no-cache-dir .
 
 FROM base AS production
-
-COPY app/ app/
 
 USER appuser
 
