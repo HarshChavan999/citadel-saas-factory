@@ -73,3 +73,13 @@ CLAUDE.local.md
 # ─── Build Artifacts ───
 *.tar.gz
 *.zip
+
+# ─── DeerFlow (external dependency, clone separately) ───
+deer-flow/
+
+# ─── Skills ───
+skills-lock.json
+.agents/
+
+# ─── Generated Index ───
+indexing/
