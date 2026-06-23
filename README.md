@@ -16,7 +16,18 @@ cd citadel-saas-factory
 cp .env.example .env
 ./scripts/bootstrap.sh
 ./scripts/verify-install.sh
-claude
+
+# Install the agent runtime engine
+cd backbone && pip install -e ".[dev]" && cd ..
+
+# Run an agent (requires ANTHROPIC_API_KEY in .env)
+python -c "
+import asyncio
+from backbone.runtime.agent_sdk import AgentSDK
+sdk = AgentSDK()
+result = asyncio.run(sdk.run_agent('eng-api-designer', prompt='Design a health check endpoint'))
+print(result['output'])
+"
 ```
 
 ---
@@ -95,12 +106,51 @@ Runs on any Linux server with SSH and Docker. No cloud vendor lock-in.
 
 ---
 
-## `.claude/` Directory Structure
+## Project Structure
+
+```
+backbone/                              # Agent runtime engine (pip install -e .)
+├── runtime/
+│   ├── model_client.py                # ModelRouter: 5 tiers, fallback, budget
+│   ├── agent_sdk.py                   # Agent resolution, execution, sub-agents
+│   ├── browse_handler.py              # Chrome extension handler
+│   └── guarded_client.py              # Triple-layer guardrails wrapper
+├── orchestrator/
+│   └── planner.py                     # Plan-execute-critique loop
+├── rag/
+│   ├── agentic_loop.py                # Retrieve-grade-rewrite-generate (max 3 iters)
+│   ├── chunker.py                     # Structure-aware token-bounded splitting
+│   ├── embeddings.py                  # Batch embedding (Voyage/Ollama)
+│   ├── store.py                       # pgvector HNSW + metadata GIN
+│   └── retriever.py                   # Hybrid search + RRF reranking
+└── pyproject.toml                     # Dependencies: litellm, anthropic, pydantic
+
+models/                                # Model configuration (YAML)
+├── routing.yaml                       # Tier definitions and fallback chains
+├── catalog.yaml                       # Model IDs, costs, context windows
+├── embeddings.yaml                    # Embedding model config
+└── rerankers.yaml                     # Reranker config
+
+extensions/chrome/                     # Chrome MV3 side-panel extension
+├── manifest.json                      # Manifest V3, minimal permissions
+├── service-worker.js                  # Background worker (tab capture)
+└── sidepanel.html                     # Side panel UI
+
+tests/                                 # Backbone test suite (20 tests)
+├── test_model_router.py               # Tier resolution, fallback, budget
+├── test_agent_sdk.py                  # Agent resolution, execution, depth cap
+├── test_rag.py                        # RAG loop, rewrite, iteration cap
+├── test_planner.py                    # Critic reject/replan, depth cap
+├── test_browse_route.py               # Browse response, injection sanitization
+└── test_guardrails_path.py            # Retry/reject, injection blocking
+```
+
+### `.claude/` Harness
 
 ```
 .claude/
-├── CLAUDE.md                          # Master intelligence file
-├── settings.json                      # Claude Code configuration
+├── CLAUDE.md                          # Master intelligence file (full harness map)
+├── settings.json                      # Hooks, permissions, tool policies
 ├── memory/
 │   ├── MEMORY.md                      # Auto-memory (persists across sessions)
 │   ├── project_citadel_saas_factory.md
@@ -567,6 +617,72 @@ Runs on any Linux server with SSH and Docker. No cloud vendor lock-in.
 
 ---
 
+## Runtime Engine (backbone/)
+
+The agent fleet is powered by `backbone/`, a Python package that provides model routing, RAG, orchestration, and guardrails.
+
+### Model Routing
+
+5 tiers defined in `models/routing.yaml`, resolved by `backbone/runtime/model_client.py`:
+
+| Tier | Primary Model | Fallback | Use Case |
+|------|--------------|----------|----------|
+| `reasoning_deep` | claude-opus-4-20250514 | claude-sonnet-4 | Architecture, strategy, security |
+| `reasoning_fast` | claude-sonnet-4-20250514 | claude-haiku-4.5 | Development, code gen, reviews |
+| `cheap_fast` | claude-haiku-4-5-20251001 | -- | Content, simple tasks, high volume |
+| `rag_specialist` | claude-sonnet-4-20250514 | claude-haiku-4.5 | RAG with citation grounding |
+| `local_only` | ollama/llama3.1 | ollama/mistral | Budget fallback, offline |
+
+Budget control: $50/day default. Automatically routes to `local_only` when exceeded.
+
+### Agent SDK
+
+```python
+from backbone.runtime.agent_sdk import AgentSDK
+
+sdk = AgentSDK()
+result = await sdk.run_agent("eng-api-designer", prompt="Design a REST endpoint")
+# Sub-agent spawning (depth-capped at 3, fan-out at 5)
+await sdk.spawn_sub_agent("parent-id", "child-id", prompt="...")
+# List by domain
+sdk.list_agents(domain="engineering")  # 25 agents
+```
+
+### RAG Pipeline
+
+Agentic RAG with iterative retrieval. Field manual: `docs/references/Agentic-RAG-Pattern.html`
+
+- **Loop**: Query -> Retrieve (vector + keyword + RRF) -> Grade -> Rewrite if weak -> Generate with citations -> Self-check
+- **Store**: PostgreSQL 16 + pgvector (HNSW index, metadata GIN)
+- **Embeddings**: Voyage 3 (prod) or Ollama nomic-embed-text (local)
+- **Max iterations**: 3 (prevents runaway cost)
+
+### Orchestrator
+
+Planner-executor-critic loop (`backbone/orchestrator/planner.py`):
+1. **Plan**: decompose goal into typed task graph
+2. **Execute**: run each step through ModelRouter
+3. **Critique**: LLM evaluates results, approves or revises
+4. **Stop-gate**: max 3 replans, then returns best-effort result
+
+### Chrome Extension
+
+`extensions/chrome/` — Manifest V3 side-panel assistant:
+- Captures active tab text on explicit user action (no background surveillance)
+- Posts to `POST /agent/browse` on the FastAPI backend
+- Tab content sanitized through 16 injection patterns before model
+- Minimal permissions: activeTab, sidePanel, storage
+
+### Security (Triple-Layer Guardrails)
+
+1. **Guardrails AI**: hallucination_free, provenance_llm, toxic_language, detect_pii
+2. **Input sanitization**: 16 regex patterns strip injection from RAG docs and browser content
+3. **Output enforcement**: 10-action allowlist, threshold 0.85, max 3 retries then reject
+
+Reference: `security/ai-security-by-design.html` (OWASP LLM Top 10 mapping)
+
+---
+
 ## Ruflo — Multi-Agent Swarm Orchestration
 
 [github.com/ruvnet/ruflo](https://github.com/ruvnet/ruflo)
@@ -579,7 +695,7 @@ ruflo init
 ### Key Features
 
 - **Mesh topology** — Agents communicate peer-to-peer, no central bottleneck
-- **314 MCP tools** — Pre-built tool integrations for Claude Code
+- **MCP tool ecosystem** — Pre-built tool integrations for Claude Code (6 active servers)
 - **Hive-mind intelligence** — Shared context and memory across all agents
 - **Self-learning neural routing** — Automatic task-to-agent matching
 - **CYCLE_INTERVAL=0** — Zero-latency agent activation

@@ -18,10 +18,12 @@ frontend: ## Start frontend dev server
 
 test: ## Run all tests
 	cd backend && pytest
+	pytest tests/
 	cd frontend && npm test
 
 lint: ## Run linters
 	cd backend && ruff check .
+	cd backbone && ruff check .
 	cd frontend && npm run lint
 
 security: ## Run security scans
@@ -84,3 +86,15 @@ engine-status: ## Print the currently configured LLM engine
 
 strategy-html: ## Regenerate docs/strategy.html from .claude/agents/_registry.yaml
 	python scripts/generate-strategy-html.py
+
+expand-agents: ## Expand _registry.yaml into individual agent .md definitions
+	python scripts/expand-registry.py
+	python scripts/validate-registry.py
+
+rag-ingest: ## Ingest documents into the RAG vector store (usage: make rag-ingest DIR=docs/)
+	@if [ -z "$(DIR)" ]; then echo "Usage: make rag-ingest DIR=docs/"; exit 1; fi
+	python -m backbone.rag.ingest $(DIR)
+
+rag-query: ## Query the RAG pipeline (usage: make rag-query Q="your question")
+	@if [ -z "$(Q)" ]; then echo "Usage: make rag-query Q=\"your question\""; exit 1; fi
+	python -m backbone.rag.query "$(Q)"

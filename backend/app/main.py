@@ -14,6 +14,7 @@ from app.routes.products import router as products_router
 from app.routes.orders import router as orders_router
 from app.routes.courses import router as courses_router
 from app.routes.webhooks import router as webhooks_router
+from app.routes.agents import router as agents_router
 
 
 @asynccontextmanager
@@ -51,6 +52,7 @@ app.include_router(products_router)
 app.include_router(orders_router)
 app.include_router(courses_router)
 app.include_router(webhooks_router)
+app.include_router(agents_router)
 
 
 @app.get("/health")
