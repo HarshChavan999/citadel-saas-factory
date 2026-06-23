@@ -1,11 +1,15 @@
 """Order and OrderItem models."""
+import enum
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, String, Float, Integer, DateTime, ForeignKey, Enum as SQLEnum
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-import enum
 from app.core.database import Base
+
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
 
 class OrderStatus(str, enum.Enum):
     pending = "pending"
@@ -21,7 +25,7 @@ class Order(Base):
     total = Column(Float, default=0.0)
     status = Column(SQLEnum(OrderStatus), default=OrderStatus.pending)
     stripe_payment_intent_id = Column(String(255), nullable=True, unique=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
     items = relationship("OrderItem", back_populates="order", lazy="selectin")
 
 class OrderItem(Base):

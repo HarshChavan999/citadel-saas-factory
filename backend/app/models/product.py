@@ -1,9 +1,13 @@
 """Product model for digital downloads."""
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, String, Text, Float, Boolean, DateTime, JSON
 from sqlalchemy.dialects.postgresql import UUID
 from app.core.database import Base
+
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
 
 class Product(Base):
     __tablename__ = "products"
@@ -19,8 +23,8 @@ class Product(Base):
     tags = Column(JSON, default=list)
     download_url = Column(String(500), nullable=True)
     is_active = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
+    updated_at = Column(DateTime, default=_utcnow, onupdate=_utcnow)
 
     def __repr__(self):
         return f"<Product {self.title}>"

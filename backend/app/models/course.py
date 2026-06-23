@@ -1,10 +1,14 @@
 """Course and Enrollment models."""
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy import Column, String, Text, Boolean, DateTime, ForeignKey, JSON
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from app.core.database import Base
+
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
 
 class Course(Base):
     __tablename__ = "courses"
@@ -15,7 +19,7 @@ class Course(Base):
     description = Column(Text, default="")
     modules = Column(JSON, default=list)
     is_free = Column(Boolean, default=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=_utcnow)
     enrollments = relationship("Enrollment", back_populates="course", lazy="selectin")
 
 class Enrollment(Base):
@@ -26,5 +30,5 @@ class Enrollment(Base):
     course_id = Column(UUID(as_uuid=True), ForeignKey("courses.id"), nullable=False, index=True)
     progress = Column(JSON, default=dict)
     completed_at = Column(DateTime, nullable=True)
-    enrolled_at = Column(DateTime, default=datetime.utcnow)
+    enrolled_at = Column(DateTime, default=_utcnow)
     course = relationship("Course", back_populates="enrollments")
