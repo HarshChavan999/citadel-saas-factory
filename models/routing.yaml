@@ -4,32 +4,37 @@
 tiers:
   reasoning_deep:
     description: Complex architecture, strategy, security analysis
-    primary: claude-opus-4-20250514
+    primary: gemini-3.6-flash
     fallbacks:
-      - claude-sonnet-4-20250514
+      - gemini-3.5-flash
+      - gemini-3.5-flash-lite
     max_tokens: 8192
     temperature: 0.3
 
   reasoning_fast:
     description: Main development, code generation, reviews
-    primary: claude-sonnet-4-20250514
+    primary: gemini-3.6-flash
     fallbacks:
-      - claude-haiku-4-5-20251001
+      - gemini-3.5-flash
+      - gemini-3.5-flash-lite
     max_tokens: 4096
     temperature: 0.2
 
   cheap_fast:
     description: Content generation, simple tasks, high volume
-    primary: claude-haiku-4-5-20251001
-    fallbacks: []
+    primary: gemini-3.5-flash-lite
+    fallbacks:
+      - gemini-3.1-flash-lite
+      - gemini-3.5-flash
     max_tokens: 2048
     temperature: 0.4
 
   rag_specialist:
     description: RAG generation with citation grounding
-    primary: claude-sonnet-4-20250514
+    primary: gemini-3.6-flash
     fallbacks:
-      - claude-haiku-4-5-20251001
+      - gemini-3.5-flash
+      - gemini-3.5-flash-lite
     max_tokens: 4096
     temperature: 0.1
 
@@ -40,6 +45,8 @@ tiers:
       - ollama/mistral
     max_tokens: 2048
     temperature: 0.3
+
+
 
 cost_controls:
   daily_budget_usd: 50.0

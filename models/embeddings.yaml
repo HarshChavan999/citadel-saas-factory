@@ -2,6 +2,13 @@
 
 models:
   primary:
+    provider: gemini
+    litellm_id: gemini/text-embedding-004
+    dimensions: 768
+    max_tokens: 2048
+    batch_size: 64
+
+  anthropic:
     provider: anthropic
     litellm_id: anthropic/voyage-3
     dimensions: 1024
@@ -14,3 +21,4 @@ models:
     dimensions: 768
     max_tokens: 8192
     batch_size: 64
+

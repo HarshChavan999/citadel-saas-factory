@@ -23,6 +23,36 @@ models:
     cost_per_1k_output: 0.004
     context_window: 200000
 
+  # Google Gemini Free Tier models
+  gemini-3.6-flash:
+    provider: gemini
+    litellm_id: gemini/gemini-3.6-flash
+    cost_per_1k_input: 0.0
+    cost_per_1k_output: 0.0
+    context_window: 1000000
+
+  gemini-3.5-flash:
+    provider: gemini
+    litellm_id: gemini/gemini-3.5-flash
+    cost_per_1k_input: 0.0
+    cost_per_1k_output: 0.0
+    context_window: 1000000
+
+  gemini-3.5-flash-lite:
+    provider: gemini
+    litellm_id: gemini/gemini-3.5-flash-lite
+    cost_per_1k_input: 0.0
+    cost_per_1k_output: 0.0
+    context_window: 1000000
+
+  gemini-3.1-flash-lite:
+    provider: gemini
+    litellm_id: gemini/gemini-3.1-flash-lite
+    cost_per_1k_input: 0.0
+    cost_per_1k_output: 0.0
+    context_window: 1000000
+
+
   ollama/llama3.1:
     provider: ollama
     litellm_id: ollama/llama3.1
@@ -36,3 +66,4 @@ models:
     cost_per_1k_input: 0.0
     cost_per_1k_output: 0.0
     context_window: 32000
+

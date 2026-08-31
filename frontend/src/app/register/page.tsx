@@ -21,7 +21,21 @@ export default function RegisterPage() {
         setError(data.detail || 'Registration failed')
         return
       }
+      // Auto log-in after registration
+      const loginRes = await fetch('/api/v1/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, password: form.password }),
+      })
+      if (loginRes.ok) {
+        const loginData = await loginRes.json()
+        localStorage.setItem('token', loginData.access_token)
+        document.cookie = `token=${loginData.access_token}; path=/; max-age=604800; SameSite=Lax`
+        window.location.href = '/dashboard'
+        return
+      }
       window.location.href = '/login'
+
     } catch {
       setError('Network error')
     } finally {

@@ -23,13 +23,19 @@ export default function LoginPage() {
         return
       }
       const data = await res.json()
+      // Store in both localStorage and cookies so Next.js middleware allows access to protected routes
       localStorage.setItem('token', data.access_token)
-      window.location.href = '/dashboard'
+      document.cookie = `token=${data.access_token}; path=/; max-age=604800; SameSite=Lax`
+
+      const params = new URLSearchParams(window.location.search)
+      const redirectUrl = params.get('redirect') || '/dashboard'
+      window.location.href = redirectUrl
     } catch {
       setError('Network error')
     } finally {
       setLoading(false)
     }
+
   }
 
   return (

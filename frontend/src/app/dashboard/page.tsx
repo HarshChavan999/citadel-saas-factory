@@ -21,7 +21,12 @@ export default function DashboardPage() {
     })
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(setUser)
-      .catch(() => { localStorage.removeItem('token'); window.location.href = '/login' })
+      .catch(() => {
+        localStorage.removeItem('token')
+        document.cookie = 'token=; path=/; max-age=0'
+        window.location.href = '/login'
+      })
+
   }, [])
 
   if (!user) return <div className="min-h-screen flex items-center justify-center">Loading...</div>
@@ -52,11 +57,16 @@ export default function DashboardPage() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold">{active}</h1>
           <button
-            onClick={() => { localStorage.removeItem('token'); window.location.href = '/login' }}
+            onClick={() => {
+              localStorage.removeItem('token')
+              document.cookie = 'token=; path=/; max-age=0'
+              window.location.href = '/login'
+            }}
             className="text-sm text-gray-500 hover:text-gray-900"
           >
             Sign Out
           </button>
+
         </div>
 
         {active === 'Home' && (

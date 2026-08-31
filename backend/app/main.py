@@ -10,11 +10,13 @@ from app.middleware.metrics import MetricsMiddleware
 from app.middleware.request_id import RequestIDMiddleware
 from app.middleware.security_headers import SecurityHeadersMiddleware
 from app.api.auth import router as auth_router
+from app.api.users import router as users_router
 from app.routes.products import router as products_router
 from app.routes.orders import router as orders_router
 from app.routes.courses import router as courses_router
 from app.routes.webhooks import router as webhooks_router
 from app.routes.agents import router as agents_router
+
 
 
 @asynccontextmanager
@@ -48,11 +50,13 @@ app.add_middleware(
 
 # Routes
 app.include_router(auth_router)
+app.include_router(users_router)
 app.include_router(products_router)
 app.include_router(orders_router)
 app.include_router(courses_router)
 app.include_router(webhooks_router)
 app.include_router(agents_router)
+
 
 
 @app.get("/health")
