@@ -12,7 +12,8 @@ class Settings(BaseSettings):
     secret_key: str = "change-me-in-production"
 
     # Database
-    database_url: str = "postgresql+asyncpg://citadel:citadel@localhost:5432/citadel"
+    database_url: str = "sqlite+aiosqlite:///./citadel.db"
+
 
     # Redis
     redis_url: str = "redis://localhost:6379/0"

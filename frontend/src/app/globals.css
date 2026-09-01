@@ -2,6 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: system-ui, -apple-system, sans-serif;
+@layer base {
+  body {
+    @apply bg-[#faf9f6] text-stone-900 antialiased selection:bg-amber-500/20 selection:text-amber-900 min-h-screen font-sans;
+  }
 }
+
+/* Custom Scrollbar - Warm Stone */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f2ec;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d6d3c9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b5b1a5;
+}
+
+/* Claude Light Theme Panels & Cards */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #e6e4df;
+}
+
+.glass-panel-subtle {
+  background: #f4f3ee;
+  border: 1px solid #e6e4df;
+}
+
+.glass-card {
+  background: #ffffff;
+  border: 1px solid #e6e4df;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+.glass-card:hover {
+  border-color: #d6d3c9;
+}
+
+/* Accordion Animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+
