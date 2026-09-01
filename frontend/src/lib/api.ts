@@ -31,4 +31,12 @@ export const api = {
     list: () => fetchAPI<import("./types").Order[]>("/orders"),
     create: (items: { product_id: string; quantity: number }[]) => fetchAPI<import("./types").Order>("/orders", { method: "POST", body: JSON.stringify({ items }) }),
   },
+  sme: {
+    getOverview: () => fetchAPI<any>("/api/v1/sme/overview"),
+    getSKUs: () => fetchAPI<any[]>("/api/v1/sme/skus"),
+    query: (queryText: string) => fetchAPI<any>("/api/v1/sme/query", { method: "POST", body: JSON.stringify({ query: queryText }) }),
+    executeAction: (actionType: string, payload: Record<string, any>) => fetchAPI<any>("/api/v1/sme/action", { method: "POST", body: JSON.stringify({ action_type: actionType, payload }) }),
+    simulateEvent: (eventType: string) => fetchAPI<any>("/api/v1/sme/simulate-event", { method: "POST", body: JSON.stringify({ event_type: eventType }) }),
+  }
 };
+

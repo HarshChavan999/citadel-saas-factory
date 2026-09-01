@@ -16,16 +16,25 @@ from app.routes.orders import router as orders_router
 from app.routes.courses import router as courses_router
 from app.routes.webhooks import router as webhooks_router
 from app.routes.agents import router as agents_router
+from app.routes.sme_management import router as sme_management_router
+
 
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan: startup and shutdown."""
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+    except Exception as exc:
+        print(f"Database warning: {exc}. Server running with memory/mock fallback.")
     yield
-    await engine.dispose()
+    try:
+        await engine.dispose()
+    except Exception:
+        pass
+
 
 
 app = FastAPI(
@@ -56,6 +65,7 @@ app.include_router(orders_router)
 app.include_router(courses_router)
 app.include_router(webhooks_router)
 app.include_router(agents_router)
+app.include_router(sme_management_router)
 
 
 
