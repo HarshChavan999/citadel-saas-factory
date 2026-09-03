@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/Citadel-Cloud-Management/citadel-saas-factory.git
+    repoURL: https://github.com/Citadel-Management/citadel-saas-factory.git
     targetRevision: main
     path: gitops/overlays/production
   destination:

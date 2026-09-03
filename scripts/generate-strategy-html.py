@@ -287,7 +287,7 @@ def render() -> str:
 <div class="note">Citadel runs on <strong>any Linux host with SSH + Docker</strong>: VPS, bare metal, on-prem, edge devices, home lab, any cloud. No vendor lock-in, no proprietary APIs. The infrastructure layer is Terraform modules targeting a generic <code>ssh://user@host</code> provider.</div>
 
 <footer>
-  <div>Citadel Cloud Management &#x00B7; MIT License &#x00B7; 2026</div>
+  <div>Citadel Management &#x00B7; MIT License &#x00B7; 2026</div>
   <div>Generated from <code>.claude/agents/_registry.yaml</code></div>
 </footer>
 

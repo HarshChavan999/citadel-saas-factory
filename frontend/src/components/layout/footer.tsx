@@ -25,10 +25,10 @@ export function Footer() {
         <div>
           <div className="flex items-center gap-2 mb-4">
             <span className="w-8 h-8 bg-cyan rounded-md flex items-center justify-center text-ink font-bold text-sm">C</span>
-            <span className="text-white font-semibold">Citadel Cloud</span>
+            <span className="text-white font-semibold">Citadel</span>
           </div>
-          <p className="text-gray text-sm leading-relaxed">Global premier cloud career platform. Build skills, earn certifications, launch your cloud career.</p>
-          <p className="text-gray text-xs mt-4">citadelcloudmanagement@gmail.com</p>
+          <p className="text-gray text-sm leading-relaxed">Global premier SaaS platform. Build skills, earn certifications, launch your SaaS career.</p>
+          <p className="text-gray text-xs mt-4">citadelmanagement@gmail.com</p>
         </div>
         {Object.entries(links).map(([title, items]) => (
           <div key={title}>
@@ -44,7 +44,7 @@ export function Footer() {
         ))}
       </div>
       <div className="max-w-7xl mx-auto px-4 mt-12 pt-8 border-t border-edge text-center">
-        <p className="text-gray text-xs">&copy; 2026 Citadel Cloud Management. All rights reserved.</p>
+        <p className="text-gray text-xs">&copy; 2026 Citadel Management. All rights reserved.</p>
       </div>
     </footer>
   );

@@ -18,7 +18,7 @@ spec:
                 - Pod
       verifyImages:
         - imageReferences:
-            - "ghcr.io/citadel-cloud-management/*"
+            - "ghcr.io/citadel-management/*"
           attestors:
             - entries:
                 - keys:

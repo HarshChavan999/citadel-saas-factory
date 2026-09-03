@@ -18,7 +18,7 @@ We are committed to providing a welcoming and inclusive environment for everyone
 
 ## Enforcement
 
-Instances of unacceptable behavior may be reported to conduct@citadelcloudmanagement.com. All reports will be reviewed and addressed.
+Instances of unacceptable behavior may be reported to conduct@citadelmanagement.com. All reports will be reviewed and addressed.
 
 ## Attribution
 

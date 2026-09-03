@@ -3,7 +3,7 @@ set -euo pipefail
 
 ENVIRONMENT="${1:-staging}"
 IMAGE_TAG="${2:-$(git rev-parse --short HEAD)}"
-REGISTRY="ghcr.io/citadel-cloud-management/citadel-saas-factory"
+REGISTRY="ghcr.io/citadel-management/citadel-saas-factory"
 
 echo "Deploying to ${ENVIRONMENT} (tag: ${IMAGE_TAG})..."
 

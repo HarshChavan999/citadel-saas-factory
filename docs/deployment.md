@@ -173,7 +173,7 @@ argocd app get citadel-production
 linkerd viz stat deploy -n production
 
 # Grafana dashboard
-# Open: https://grafana.citadelcloudmanagement.com/d/production
+# Open: https://grafana.citadelmanagement.com/d/production
 ```
 
 ## Database Migrations

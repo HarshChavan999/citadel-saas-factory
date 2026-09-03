@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: ghcr.io/citadel-cloud-management/citadel-saas-factory/backend
+  repository: ghcr.io/citadel-management/citadel-saas-factory/backend
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -14,14 +14,14 @@ ingress:
   className: traefik
   hosts:
     # Update with your domain
-    - host: app.citadelcloudmanagement.com
+    - host: app.citadelmanagement.com
       paths:
         - path: /
           pathType: Prefix
   tls:
     - secretName: citadel-tls
       hosts:
-        - app.citadelcloudmanagement.com
+        - app.citadelmanagement.com
 
 resources:
   limits:

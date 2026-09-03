@@ -38,7 +38,7 @@ consent_management:
   analytics_consent: "Opt-out available"
 
 data_subject_rights:
-  request_channel: "privacy@citadelcloudmanagement.com"
+  request_channel: "privacy@citadelmanagement.com"
   response_sla_days: 30
   identity_verification: "Required before fulfilling requests"
   rights:

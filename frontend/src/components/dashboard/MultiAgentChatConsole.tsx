@@ -53,7 +53,7 @@ export const MultiAgentChatConsole: React.FC<MultiAgentChatConsoleProps> = ({
               <Sparkles className="h-5 w-5" />
             </span>
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-800">
-              Claude Multi-Agent Conversational Intelligence
+              Autonomous Multi-Agent Conversational Intelligence
             </span>
           </div>
           <h3 className="text-2xl font-extrabold text-stone-900 tracking-tight">
@@ -125,7 +125,7 @@ export const MultiAgentChatConsole: React.FC<MultiAgentChatConsoleProps> = ({
                   <span className="text-[10px] text-stone-500 font-mono">{msg.timestamp}</span>
                 </div>
 
-                {/* Collapsible Reasoning Accordion (Claude Style) */}
+                {/* Collapsible Reasoning Accordion */}
                 {msg.reasoningSteps && msg.reasoningSteps.length > 0 && (
                   <div className="rounded-xl border border-[#e5e3dc] bg-[#f8f7f2] overflow-hidden">
                     <button

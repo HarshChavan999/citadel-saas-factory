@@ -6,7 +6,7 @@ If you discover a security vulnerability, please report it responsibly.
 
 **Do NOT open a public GitHub issue for security vulnerabilities.**
 
-Email: security@citadelcloudmanagement.com
+Email: security@citadelmanagement.com
 
 Include:
 - Description of the vulnerability

@@ -55,7 +55,7 @@ Citadel: Routes to sec-sast agent (reasoning_deep tier, Claude Opus)
 ## Quick Start
 
 ```bash
-git clone https://github.com/Citadel-Cloud-Management/citadel-saas-factory.git
+git clone https://github.com/Citadel-Management/citadel-saas-factory.git
 cd citadel-saas-factory
 cp .env.example .env          # Add your ANTHROPIC_API_KEY
 docker compose up -d           # Postgres, Redis, Keycloak, MinIO, RabbitMQ
@@ -434,7 +434,7 @@ Every session adds to the wiki. Every valuable answer is filed back. Knowledge c
 
 MIT License. See [LICENSE](LICENSE).
 
-Copyright (c) Citadel Cloud Management
+Copyright (c) Citadel Management
 
 ---
 
@@ -442,7 +442,7 @@ Copyright (c) Citadel Cloud Management
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:161b22,100:5b8dff&height=120&section=footer" width="100%"/>
 
-**[citadelcloudmanagement.com](https://citadelcloudmanagement.com)**
+**[citadelmanagement.com](https://citadelmanagement.com)**
 
 <sub>Built with Claude Code. Powered by 265 autonomous agents. $0/month software cost.</sub>
 

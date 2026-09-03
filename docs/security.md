@@ -132,10 +132,10 @@ ZAP runs against staging after each deployment:
 
 ```bash
 # Baseline scan
-zap-baseline.py -t https://staging.citadelcloudmanagement.com
+zap-baseline.py -t https://staging.citadelmanagement.com
 
 # Full scan (nightly)
-zap-full-scan.py -t https://staging.citadelcloudmanagement.com
+zap-full-scan.py -t https://staging.citadelmanagement.com
 ```
 
 ### Nightly Security Scan
@@ -283,7 +283,7 @@ Content-Security-Policy:
   script-src 'self' 'nonce-{random}';
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: https:;
-  connect-src 'self' https://api.citadelcloudmanagement.com;
+  connect-src 'self' https://api.citadelmanagement.com;
   frame-ancestors 'none';
 ```
 

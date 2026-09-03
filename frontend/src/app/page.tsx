@@ -35,7 +35,7 @@ export default function LandingPage() {
               <h1 className="text-base font-extrabold text-stone-900 tracking-tight flex items-center gap-2">
                 Citadel BI & OS
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-800 border border-amber-500/20">
-                  Claude AI Virtual Team
+                  AI Virtual Team
                 </span>
               </h1>
               <p className="text-xs text-stone-500">AI Decision Support System for SMEs</p>
@@ -62,7 +62,7 @@ export default function LandingPage() {
         </div>
 
         <h1 className="text-4xl sm:text-6xl font-black text-stone-900 tracking-tight max-w-4xl mx-auto leading-tight">
-          Enterprise-Grade Decision Support for SMEs, Powered by <span className="text-[#d97757]">Multi-Agent Claude AI</span>
+          Enterprise-Grade Decision Support for SMEs, Powered by <span className="text-[#d97757]">Autonomous Multi-Agent AI</span>
         </h1>
 
         <p className="text-stone-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-medium">

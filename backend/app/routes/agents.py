@@ -36,7 +36,7 @@ async def browse_agent(request: BrowseRequest) -> BrowseResponse:
     Captures active tab context and runs it through a browsing-oriented agent
     via the ModelRouter. Tab content is sanitized before processing.
 
-    This endpoint mirrors the Claude-in-Chrome pattern and is gated behind
+    This endpoint mirrors the Browser Extension pattern and is gated behind
     an explicit user action per tab (no background surveillance).
     """
     try:
