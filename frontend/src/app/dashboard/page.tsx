@@ -150,7 +150,37 @@ export default function DashboardPage() {
     }
   };
 
-  const handleSendMessage = (queryText: string) => {
+  const handleSendMessage = async (queryText: string) => {
+    try {
+      const res = await fetch('http://localhost:8000/api/v1/agent/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: queryText, agent_type: 'orchestrator' })
+      }).catch(() => null);
+
+      if (res && res.ok) {
+        const data = await res.json();
+        if (data && data.response) {
+          const apiMessage: ChatMessage = {
+            id: `msg-api-${Date.now()}`,
+            sender: 'coo',
+            queryText,
+            finalAnswer: data.response,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            suggestedActions: [
+              { label: 'Issue Reorder PO ($4,000)', actionType: 'reorder', payload: { skuId: 'SKU-884', qty: 250 } },
+              { label: 'View Executive Summary', actionType: 'navigate', payload: { tab: 'executive' } }
+            ]
+          };
+          setMessages(prev => [...prev, apiMessage]);
+          if (activeTab !== 'chat') setActiveTab('chat');
+          return;
+        }
+      }
+    } catch {
+      // Fallback seamlessly to local engine
+    }
+
     const newMessage = processNaturalLanguageQuery(queryText, skus, salesHistory, expenses, feedbacks, signals);
     setMessages(prev => [...prev, newMessage]);
     if (activeTab !== 'chat') setActiveTab('chat');

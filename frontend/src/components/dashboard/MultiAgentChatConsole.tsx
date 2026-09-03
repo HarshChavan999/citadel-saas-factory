@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Sparkles, 
   Send, 
@@ -31,6 +31,22 @@ export const MultiAgentChatConsole: React.FC<MultiAgentChatConsoleProps> = ({
 }) => {
   const [inputQuery, setInputQuery] = useState('');
   const [expandedReasoningMap, setExpandedReasoningMap] = useState<Record<string, boolean>>({});
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+    // Auto-expand reasoning chain for the latest message if present
+    if (messages.length > 0) {
+      const latestMsg = messages[messages.length - 1];
+      if (latestMsg.reasoningSteps && latestMsg.reasoningSteps.length > 0) {
+        setExpandedReasoningMap(prev => ({ ...prev, [latestMsg.id]: true }));
+      }
+    }
+  }, [messages]);
 
   const toggleReasoning = (msgId: string) => {
     setExpandedReasoningMap(prev => ({ ...prev, [msgId]: !prev[msgId] }));
@@ -206,6 +222,7 @@ export const MultiAgentChatConsole: React.FC<MultiAgentChatConsoleProps> = ({
             </div>
           );
         })}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Input Box Bar */}

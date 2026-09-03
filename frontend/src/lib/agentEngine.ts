@@ -409,16 +409,17 @@ export function processNaturalLanguageQuery(
       { label: 'View Customer Feedback Stream', actionType: 'navigate', payload: { tab: 'customer' } }
     ];
   }
-  else {
-    // Custom query handling
-    participatingAgents = ['sales', 'inventory', 'finance', 'customer', 'market', 'orchestrator'];
+  else if (normalized.includes('profit') || normalized.includes('margin') || normalized.includes('price') || normalized.includes('product') || normalized.includes('sku')) {
+    participatingAgents = ['sales', 'inventory', 'market', 'orchestrator'];
+    const highestMarginSku = [...skus].sort((a, b) => (b.price - b.cost) - (a.price - a.cost))[0];
+    const lowestMarginSku = [...skus].sort((a, b) => (a.price - a.cost) - (b.price - b.cost))[0];
 
     reasoningSteps.push({
       agentId: 'orchestrator',
       agentName: 'Decision Support Agent (COO)',
       phase: 'data_ingestion',
-      thought: `Parsing custom natural language query: "${query}". Initiating multi-agent scan across commercial metrics, operational stock levels, and ledger accounts.`,
-      dataCited: ['Heterogeneous Data Sources Scanned', 'Context Model Updated'],
+      thought: `Parsing query regarding product catalog profitability and margin distribution across ${skus.length} active SKUs.`,
+      dataCited: [`Active SKUs: ${skus.length}`, 'Price/Cost Catalog Ingested'],
       timestamp: nowStr
     });
 
@@ -426,17 +427,8 @@ export function processNaturalLanguageQuery(
       agentId: 'sales',
       agentName: 'Sales Intelligence Agent',
       phase: 'domain_analysis',
-      thought: 'Scanned commercial database. Revenue stands at $39,800 with 1,040 orders processed. Top category is Beverages (48% share).',
-      dataCited: ['Revenue: $39,800', 'Top Category: Beverages'],
-      timestamp: nowStr
-    });
-
-    reasoningSteps.push({
-      agentId: 'inventory',
-      agentName: 'Inventory Operations Agent',
-      phase: 'domain_analysis',
-      thought: 'Evaluated stock health. 2 critical SKUs identified (SKU-884, SKU-990). Dead stock working capital stands at $2,808.',
-      dataCited: ['Critical SKUs: 2', 'Dead Stock: $2,808'],
+      thought: `Analyzed product margin spectrum. Top margin item is ${highestMarginSku.name} (${highestMarginSku.id}) at $${(highestMarginSku.price - highestMarginSku.cost).toFixed(2)}/unit margin (${(((highestMarginSku.price - highestMarginSku.cost)/highestMarginSku.price)*100).toFixed(1)}%). Lowest margin item is ${lowestMarginSku.name} (${lowestMarginSku.id}).`,
+      dataCited: [`Highest Margin: ${highestMarginSku.name} ($${highestMarginSku.price - highestMarginSku.cost}/unit)`, `Lowest Margin: ${lowestMarginSku.name}`],
       timestamp: nowStr
     });
 
@@ -444,22 +436,89 @@ export function processNaturalLanguageQuery(
       agentId: 'orchestrator',
       agentName: 'Decision Support Agent (COO)',
       phase: 'final_synthesis',
-      thought: 'Synthesized custom query answer grounded in active operational state.',
-      dataCited: ['Executive Insights Ready'],
+      thought: 'Synthesized catalog pricing analysis with promotional liquidation recommendations.',
+      dataCited: ['Product Margin Spectrum Evaluated'],
       timestamp: nowStr
     });
 
-    finalAnswer = `Here is the multi-agent analysis for your query: **"${query}"**\n\n- **Commercial Health**: August revenue is **$39,800** (-23.4% vs target), with Beverages holding the highest category market share.\n- **Operational Constraints**: SKU-884 (Coffee Beans) has only **3 days of stock remaining** (42 units).\n- **Financial Position**: Liquidity buffer is healthy at **$14,200**, though express freight expenses ran **+$3,900 over budget**.\n- **Customer Sentiment**: WhatsApp complaints stand at **28% negative**, primarily due to shipping delay inquiries.\n\n*Would you like me to issue a specific reorder PO or run an expense reduction plan?*`;
+    finalAnswer = `Here is the product profitability & margin breakdown across your active catalog:\n\n1. **Top Profitability Driver**: **${highestMarginSku.name} (${highestMarginSku.id})**\n   - Retail Price: **$${highestMarginSku.price.toFixed(2)}** | Cost: **$${highestMarginSku.cost.toFixed(2)}**\n   - Profit Margin: **$${(highestMarginSku.price - highestMarginSku.cost).toFixed(2)} per unit** (${(((highestMarginSku.price - highestMarginSku.cost)/highestMarginSku.price)*100).toFixed(1)}% margin).\n\n2. **Lowest Margin Item**: **${lowestMarginSku.name} (${lowestMarginSku.id})**\n   - Retail Price: **$${lowestMarginSku.price.toFixed(2)}** | Cost: **$${lowestMarginSku.cost.toFixed(2)}**\n   - Current Stock Status: **${lowestMarginSku.status.replace('_', ' ').toUpperCase()}**.\n\n**Strategic Recommendation**:\n- Promote high-margin items to boost overall Gross Margin above target 45%.`;
 
     keyDataPoints = [
-      { label: 'Current Revenue', value: '$39,800' },
-      { label: 'Stockout Risk SKUs', value: '2 Items' },
-      { label: 'Available Cash', value: '$14,200' }
+      { label: 'Highest Margin SKU', value: highestMarginSku.id },
+      { label: 'Max Unit Margin', value: `$${(highestMarginSku.price - highestMarginSku.cost).toFixed(2)}` },
+      { label: 'Catalog SKUs Analyzed', value: `${skus.length} Items` }
+    ];
+
+    suggestedActions = [
+      { label: `Promote ${highestMarginSku.name}`, actionType: 'discount', payload: { skuId: highestMarginSku.id } },
+      { label: 'View Sales Analytics', actionType: 'navigate', payload: { tab: 'sales' } }
+    ];
+  }
+  else {
+    // Custom dynamic query handling
+    participatingAgents = ['sales', 'inventory', 'finance', 'customer', 'market', 'orchestrator'];
+
+    const criticalCount = skus.filter(s => s.status === 'critical').length;
+    const overBudgetExpCount = expenses.filter(e => e.status === 'over_budget').length;
+    const negFeedbackCount = feedbacks.filter(f => f.sentiment === 'negative').length;
+    const latestSales = sales[sales.length - 1];
+
+    reasoningSteps.push({
+      agentId: 'orchestrator',
+      agentName: 'Decision Support Agent (COO)',
+      phase: 'data_ingestion',
+      thought: `Parsing custom natural language query: "${query}". Initiating real-time multi-agent state evaluation across 6 connected domain streams.`,
+      dataCited: ['6 Agent State Streams Ingested', 'Live Metrics Calculated'],
+      timestamp: nowStr
+    });
+
+    reasoningSteps.push({
+      agentId: 'sales',
+      agentName: 'Sales Intelligence Agent',
+      phase: 'domain_analysis',
+      thought: `Commercial audit: August revenue stands at $${latestSales.revenue.toLocaleString()} vs $${latestSales.target.toLocaleString()} target (${latestSales.revenue >= latestSales.target ? 'Target Met' : 'Variance -23.4%'}).`,
+      dataCited: [`Revenue: $${latestSales.revenue.toLocaleString()}`, `Orders: ${latestSales.orders}`],
+      timestamp: nowStr
+    });
+
+    reasoningSteps.push({
+      agentId: 'inventory',
+      agentName: 'Inventory Operations Agent',
+      phase: 'domain_analysis',
+      thought: `Supply chain audit: ${criticalCount} SKU(s) flagged at critical stockout risk (<4 days lead time).`,
+      dataCited: [`Critical Stock SKUs: ${criticalCount}`, `Catalog Total: ${skus.length} SKUs`],
+      timestamp: nowStr
+    });
+
+    reasoningSteps.push({
+      agentId: 'finance',
+      agentName: 'Finance & Liquidity Agent',
+      phase: 'domain_analysis',
+      thought: `Liquidity audit: Cash buffer is $14,200 with ${overBudgetExpCount} cost center(s) over budget limit.`,
+      dataCited: ['Liquidity Buffer: $14,200', `Over-budget items: ${overBudgetExpCount}`],
+      timestamp: nowStr
+    });
+
+    reasoningSteps.push({
+      agentId: 'orchestrator',
+      agentName: 'Decision Support Agent (COO)',
+      phase: 'final_synthesis',
+      thought: 'Synthesized custom multi-agent answer grounded in real-time operational state.',
+      dataCited: ['Executive Analysis Complete'],
+      timestamp: nowStr
+    });
+
+    finalAnswer = `Multi-agent Operational Intelligence Report for **"${query}"**:\n\n- **Commercial Revenue**: **$${latestSales.revenue.toLocaleString()}** (${latestSales.orders} orders processed this month).\n- **Inventory & Supply Chain**: **${criticalCount} critical SKU(s)** at risk of stockout within 4 days (SKU-884 coffee beans has 42 units left).\n- **Finance & Cash Flow**: Net cash buffer is **$14,200** (healthy), with **${overBudgetExpCount} expense category** over budget.\n- **Customer Experience**: **${negFeedbackCount} unresolved incident(s)** logged across WhatsApp and email channels.\n\n*Select a recommended executive decision below to authorize instant operational resolution:*`;
+
+    keyDataPoints = [
+      { label: 'August Revenue', value: `$${latestSales.revenue.toLocaleString()}` },
+      { label: 'Stockout Risk SKUs', value: `${criticalCount} Items` },
+      { label: 'Available Cash Buffer', value: '$14,200' }
     ];
 
     suggestedActions = [
       { label: 'Issue Reorder PO ($4,000)', actionType: 'reorder', payload: { skuId: 'SKU-884', qty: 250 } },
-      { label: 'Review Executive Recommendations', actionType: 'navigate', payload: { tab: 'executive' } }
+      { label: 'View Executive Summary', actionType: 'navigate', payload: { tab: 'executive' } }
     ];
   }
 
