@@ -3,10 +3,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
+  { label: "Dashboard", href: "/dashboard" },
   { label: "Courses", href: "/courses" },
   { label: "Products", href: "/products" },
   { label: "Pricing", href: "/pricing" },
-  { label: "About", href: "/about" },
 ];
 
 export function Header() {

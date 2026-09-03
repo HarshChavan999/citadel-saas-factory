@@ -35,6 +35,7 @@ interface ExecutiveSummaryViewProps {
   healthScore: number;
   onExecuteAction: (actionType: string, payload: any) => void;
   onNavigateToTab: (tab: string) => void;
+  onInspectAgent?: (agentId: string) => void;
 }
 
 export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
@@ -47,7 +48,8 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
   feedbacks,
   healthScore,
   onExecuteAction,
-  onNavigateToTab
+  onNavigateToTab,
+  onInspectAgent
 }) => {
   const latestSales = sales[sales.length - 1];
   const criticalSkus = skus.filter(s => s.status === 'critical');
@@ -88,7 +90,7 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
                 agent={agent} 
                 size="sm" 
                 showRole={false}
-                onClick={() => onNavigateToTab(agent.id === 'orchestrator' ? 'executive' : agent.id)}
+                onClick={() => onInspectAgent ? onInspectAgent(agent.id) : onNavigateToTab(agent.id === 'orchestrator' ? 'executive' : agent.id)}
               />
             ))}
           </div>
@@ -98,9 +100,13 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
       {/* Primary Executive KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Health Score */}
-        <div className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs">
+        <div 
+          onClick={() => onInspectAgent ? onInspectAgent('orchestrator') : onNavigateToTab('executive')}
+          className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs cursor-pointer hover:border-emerald-500 transition group"
+          title="Inspect Chief Operating Officer Orchestrator Agent"
+        >
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-stone-600">Business Health Score</span>
+            <span className="text-xs font-semibold text-stone-600 group-hover:text-stone-900 transition">Business Health Score</span>
             <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700">
               <Zap className="h-4 w-4" />
             </span>
@@ -112,12 +118,17 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
           <div className="w-full bg-[#e8e6de] rounded-full h-1.5 overflow-hidden">
             <div className="bg-emerald-600 h-full rounded-full" style={{ width: `${healthScore}%` }}></div>
           </div>
+          <p className="text-[10px] text-stone-500 font-medium pt-0.5">Click to inspect COO reasoning</p>
         </div>
 
         {/* Revenue */}
-        <div className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs">
+        <div 
+          onClick={() => onNavigateToTab('sales')}
+          className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs cursor-pointer hover:border-emerald-500 transition group"
+          title="Navigate to Sales Intelligence & Revenue Analytics"
+        >
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold text-stone-600">August Revenue</span>
+            <span className="text-xs font-semibold text-stone-600 group-hover:text-stone-900 transition">August Revenue</span>
             <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700">
               <TrendingUp className="h-4 w-4" />
             </span>
@@ -135,6 +146,7 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
         <div 
           onClick={() => onNavigateToTab('inventory')}
           className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs cursor-pointer hover:border-amber-400 transition"
+          title="Navigate to Inventory & Supply Chain Operations"
         >
           <div className="flex justify-between items-start">
             <span className="text-xs font-semibold text-stone-600">Critical Stockout Risk</span>
@@ -153,6 +165,7 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
         <div 
           onClick={() => onNavigateToTab('finance')}
           className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs cursor-pointer hover:border-indigo-400 transition"
+          title="Navigate to Finance & Liquidity Control"
         >
           <div className="flex justify-between items-start">
             <span className="text-xs font-semibold text-stone-600">Net Cash Buffer</span>

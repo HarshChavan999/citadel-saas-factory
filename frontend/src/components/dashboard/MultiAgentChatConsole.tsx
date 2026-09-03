@@ -15,6 +15,7 @@ import {
 import { ChatMessage, AgentMetadata } from '../../lib/types';
 import { PRESET_EXECUTIVE_QUERIES } from '../../lib/mockData';
 import { AgentBadge } from '../ui/AgentBadge';
+import { MarkdownPreview } from '../ui/MarkdownPreview';
 
 interface MultiAgentChatConsoleProps {
   messages: ChatMessage[];
@@ -168,10 +169,14 @@ export const MultiAgentChatConsole: React.FC<MultiAgentChatConsoleProps> = ({
                   </div>
                 )}
 
-                {/* Final Synthesized Answer */}
+                {/* Final Synthesized Answer (.md Format Preview & Source View) */}
                 {msg.finalAnswer && (
-                  <div className="text-xs text-stone-800 leading-relaxed whitespace-pre-line font-sans font-medium">
-                    {msg.finalAnswer}
+                  <div className="pt-1">
+                    <MarkdownPreview 
+                      content={msg.finalAnswer} 
+                      showToggle={true}
+                      defaultMode="preview"
+                    />
                   </div>
                 )}
 

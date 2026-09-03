@@ -28,6 +28,7 @@ interface SidebarProps {
   isCollapsed: boolean;
   setIsCollapsed: (collapsed: boolean) => void;
   healthScore: number;
+  onShowToast?: (msg: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -36,7 +37,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   agents,
   isCollapsed,
   setIsCollapsed,
-  healthScore
+  healthScore,
+  onShowToast
 }) => {
   const mainNav = [
     { id: 'executive', label: 'Executive COO Workspace', icon: ShieldCheck, color: 'text-amber-700' },
@@ -93,7 +95,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Enterprise Switcher */}
         {!isCollapsed && (
-          <div className="p-2 rounded-xl bg-[#e8e6de] border border-[#dcd9ce] text-xs flex items-center justify-between text-stone-800 hover:border-stone-400 transition cursor-pointer">
+          <div 
+            onClick={() => onShowToast && onShowToast('Tenant Workspace: Apex Retail Co. (Single-Tenant Mode Active)')}
+            className="p-2 rounded-xl bg-[#e8e6de] border border-[#dcd9ce] text-xs flex items-center justify-between text-stone-800 hover:border-amber-400 hover:bg-[#eae7df] transition cursor-pointer"
+            title="Click to inspect active tenant organization"
+          >
             <div className="flex items-center gap-2 overflow-hidden">
               <Building2 className="h-3.5 w-3.5 text-amber-700 flex-shrink-0" />
               <span className="font-bold text-stone-900 truncate text-[11px]">Apex Retail Co.</span>

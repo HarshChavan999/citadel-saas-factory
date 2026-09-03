@@ -88,6 +88,27 @@ export default function DashboardPage() {
     setTimeout(() => setToastMessage(null), 4000);
   };
 
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    document.cookie = 'token=; path=/; max-age=0';
+    window.location.href = '/login';
+  };
+
+  // Periodic subtle live simulation ping
+  useEffect(() => {
+    if (!isLiveSimulating) return;
+    const interval = setInterval(() => {
+      setSkus(prev => prev.map(s => {
+        if (s.id === 'SKU-884' && s.currentStock > 10) {
+          const nextStock = s.currentStock - 1;
+          return { ...s, currentStock: nextStock, daysUntilStockout: Math.max(1, Math.round(nextStock / s.dailyDepletionRate)) };
+        }
+        return s;
+      }));
+    }, 25000);
+    return () => clearInterval(interval);
+  }, [isLiveSimulating]);
+
   const handleInspectAgent = (agentId: string) => {
     const found = INITIAL_AGENTS.find(a => a.id === agentId);
     if (found) {
@@ -113,7 +134,8 @@ export default function DashboardPage() {
       reorder: `Issue Emergency Purchase Order for ${payload.skuId || 'SKU-884'}`,
       discount: `Activate 50% Flash Clearance Bundle on ${payload.skuId || 'SKU-405'}`,
       cut_expense: `Renegotiate Carrier SLA & Cap Express Freight Budget`,
-      contact_customer: `Dispatch Priority Apology & Voucher to Wholesale Accounts`
+      contact_customer: `Dispatch Priority Apology & Voucher to Wholesale Accounts`,
+      adjust_price: `Launch Value Bundle to Neutralize Competitor Price Cut`
     };
 
     setModalTitle(titleMap[actionType] || `Execute Strategic Action: ${actionType}`);
@@ -147,6 +169,13 @@ export default function DashboardPage() {
     else if (actionType === 'contact_customer') {
       setFeedbacks(prev => prev.map(f => ({ ...f, resolutionStatus: 'resolved' })));
       showToast(`Apology vouchers dispatched to wholesale clients via WhatsApp API.`);
+    }
+    else if (actionType === 'adjust_price') {
+      setSignals(prev => prev.map(s => s.category === 'competitor_pricing' ? { ...s, impactScore: 0 } : s));
+      showToast(`Dynamic pricing bundle activated. Competitor undercutting neutralized.`);
+    }
+    else {
+      showToast(`Strategic decision "${actionType}" authorized & executed.`);
     }
   };
 
@@ -213,6 +242,7 @@ export default function DashboardPage() {
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
         healthScore={healthScore}
+        onShowToast={showToast}
       />
 
       {/* Main Workspace Body */}
@@ -224,6 +254,8 @@ export default function DashboardPage() {
           isLiveSimulating={isLiveSimulating}
           setIsLiveSimulating={setIsLiveSimulating}
           healthScore={healthScore}
+          onSignOut={handleSignOut}
+          onShowToast={showToast}
         />
 
         <main className="flex-1 overflow-y-auto px-4 lg:px-8 py-6">
@@ -238,13 +270,8 @@ export default function DashboardPage() {
               feedbacks={feedbacks}
               healthScore={healthScore}
               onExecuteAction={handleActionClick}
-              onNavigateToTab={(tab) => {
-                if (['sales', 'inventory', 'finance', 'customer', 'market', 'orchestrator'].includes(tab)) {
-                  handleInspectAgent(tab);
-                } else {
-                  setActiveTab(tab);
-                }
-              }}
+              onNavigateToTab={(tab) => setActiveTab(tab)}
+              onInspectAgent={handleInspectAgent}
             />
           )}
 
