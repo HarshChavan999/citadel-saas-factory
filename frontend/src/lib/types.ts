@@ -16,6 +16,10 @@ export interface AgentMetadata {
   status: 'active' | 'analyzing' | 'idle' | 'warning';
   description: string;
   iconName: string;
+  bossName?: string;
+  bossTitle?: string;
+  personality?: string;
+  directQuote?: string;
 }
 
 export interface SKUItem {

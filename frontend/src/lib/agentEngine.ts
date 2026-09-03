@@ -188,50 +188,50 @@ export function processNaturalLanguageQuery(
 
     reasoningSteps.push({
       agentId: 'orchestrator',
-      agentName: 'Decision Support Agent (COO)',
+      agentName: 'Arthur Pendelton (COO)',
       phase: 'data_ingestion',
-      thought: 'Query received regarding August sales contraction ($39.8k vs $52k target). Decomposing query into Commercial Sales Analytics, Inventory Availability, and Competitor Pricing.',
+      thought: 'Executive Roundtable convened. Sarah, Marcus, David—let\'s get an honest review of why August revenue missed target by $12,200 ($39.8k actual vs $52k target).',
       dataCited: ['August Revenue: $39,800', 'Target: $52,000', 'Deficit: -$12,200'],
       timestamp: nowStr
     });
 
     reasoningSteps.push({
       agentId: 'sales',
-      agentName: 'Sales Intelligence Agent',
+      agentName: 'Sarah Jenkins (VP of Sales)',
       phase: 'domain_analysis',
-      thought: 'Analyzed transaction logs. Organic Roast Coffee (SKU-884) experienced a 44% drop in weekly order volume during the final 10 days of August, causing 68% of total revenue shortfall.',
+      thought: 'Arthur, our sales volume dropped 44% in the final 10 days of August because our top revenue generator—Organic Roast Coffee (SKU-884)—ran completely dry in store!',
       dataCited: ['SKU-884 Orders: -44%', 'AOV: $38.26', 'Channel POS: -22%'],
       timestamp: nowStr
     });
 
     reasoningSteps.push({
       agentId: 'inventory',
-      agentName: 'Inventory Operations Agent',
+      agentName: 'Marcus Vance (Supply Chain Director)',
       phase: 'domain_analysis',
-      thought: 'Cross-referenced inventory depletion records. SKU-884 stock fell below minimum safety threshold (100 units) on Aug 21, resulting in stockouts and unfulfilled cart abandonments.',
+      thought: 'Sarah\'s right. We only have 42 units left in the warehouse right now—that\'s barely 3 days of inventory. Customers are abandoning carts because we\'re out of stock.',
       dataCited: ['SKU-884 Current Stock: 42 units', 'Depletion: 14.2 units/day', 'Stockout Date: 3 Days'],
       timestamp: nowStr
     });
 
     reasoningSteps.push({
       agentId: 'market',
-      agentName: 'Market Intelligence Agent',
+      agentName: 'David Sterling (Chief Market Officer)',
       phase: 'domain_analysis',
-      thought: 'Scanned competitor positioning. Direct rival UrbanBrew introduced a 20% flash discount ($27.60/kg) on Aug 24, diverting price-sensitive wholesale buyers.',
+      thought: 'To make matters worse, UrbanBrew launched a 20% flash price cut ($27.60/kg vs our $34.50/kg) on Aug 24, poaching our price-sensitive wholesale buyers.',
       dataCited: ['UrbanBrew Price: $27.60', 'Our Price: $34.50', 'Market Share Drag: ~8%'],
       timestamp: nowStr
     });
 
     reasoningSteps.push({
       agentId: 'orchestrator',
-      agentName: 'Decision Support Agent (COO)',
+      agentName: 'Arthur Pendelton (COO)',
       phase: 'final_synthesis',
-      thought: 'Synthesized multi-agent inputs. Primary root cause of sales drop is a combination of inventory stockouts for SKU-884 (+68% impact) and competitor price undercut (+32% impact). Resolving by recommending an emergency air-freight reorder coupled with a loyalty customer outreach.',
+      thought: 'Honest review complete: 68% of the sales drop was caused by Marcus running out of coffee stock, and 32% by David\'s competitor price cut. Here is our direct consensus for you.',
       dataCited: ['Combined Deficit Root Cause Identified', 'Action Plan Generated'],
       timestamp: nowStr
     });
 
-    finalAnswer = `Sales dropped in August primarily due to a **$12,200 deficit against target**, driven by two converging factors:\n\n1. **Stockout in Top Revenue Driver (SKU-884)**: Organic Roast Coffee stock fell to 42 units (only 3 days left), causing a 44% drop in order completion during the last 10 days of August.\n2. **Competitor Flash Discount**: Rival brand UrbanBrew launched a 20% price promotion ($27.60/kg vs our $34.50/kg), capturing price-sensitive commercial accounts.\n\n**Recommended Strategic Response**:\n- Issue emergency expedited air-freight PO for 250 units of SKU-884.\n- Launch a targeted 10% bundle incentive for wholesale subscribers.`;
+    finalAnswer = `🗣️ **Executive Bosses Roundtable Honest Review**:\n\n**Arthur Pendelton (COO)**: "Here is the unfiltered truth about why sales dropped $12,200 below target in August:\n\n1. **Marcus Vance (Supply Chain)**: 'We ran out of our #1 selling item! Organic Roast Coffee (SKU-884) only has 42 units left (3 days stock), which cut late-month sales volume by 44%.'\n2. **David Sterling (Market Analyst)**: 'Competitor UrbanBrew undercut us with a 20% price cut ($27.60/kg vs our $34.50/kg), poaching wholesale buyers.'\n\n**Our Action Plan for You**:\n- **Reorder**: Authorize Marcus to issue a 250-unit PO ($4,000) today.\n- **Sales Push**: Authorize Sarah to launch a 10% wholesale loyalty bundle."`;
 
     keyDataPoints = [
       { label: 'August Revenue', value: '$39,800 (-23.4%)' },
