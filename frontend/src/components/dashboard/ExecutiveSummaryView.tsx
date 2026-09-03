@@ -98,7 +98,10 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
       {/* Primary Executive KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Health Score */}
-        <div className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs">
+        <div 
+          onClick={() => onNavigateToTab('orchestrator')}
+          className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs cursor-pointer hover:border-emerald-400 transition"
+        >
           <div className="flex justify-between items-start">
             <span className="text-xs font-semibold text-stone-600">Business Health Score</span>
             <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700">
@@ -115,7 +118,10 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
         </div>
 
         {/* Revenue */}
-        <div className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs">
+        <div 
+          onClick={() => onNavigateToTab('sales')}
+          className="glass-card p-5 rounded-2xl border border-[#e6e4df] space-y-2 bg-white shadow-xs cursor-pointer hover:border-emerald-400 transition"
+        >
           <div className="flex justify-between items-start">
             <span className="text-xs font-semibold text-stone-600">August Revenue</span>
             <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-700">

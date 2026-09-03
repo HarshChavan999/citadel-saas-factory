@@ -37,6 +37,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     integrations: 'Data Ingestion & Event Simulator'
   };
 
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setActiveTab('chat');
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [setActiveTab]);
+
   return (
     <header className="sticky top-0 z-30 bg-[#faf9f6]/90 border-b border-[#e6e4df] backdrop-blur-xl px-4 lg:px-6 py-2.5 flex items-center justify-between gap-4">
       {/* Breadcrumb Navigation */}
