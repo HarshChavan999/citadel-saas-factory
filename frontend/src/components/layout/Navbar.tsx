@@ -59,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#f3f2ec] border border-[#e5e3dc] text-xs text-stone-600 hover:text-stone-900 hover:border-stone-400 cursor-pointer transition w-64 shadow-xs"
         >
           <Search className="h-3.5 w-3.5 text-stone-500" />
-          <span className="truncate flex-1 text-[11px]">Ask Claude AI or search data...</span>
+          <span className="truncate flex-1 text-[11px]">Ask Virtual Team or search data...</span>
           <kbd className="px-1.5 py-0.5 rounded bg-[#e6e4df] text-[10px] text-stone-700 font-mono">⌘K</kbd>
         </div>
 

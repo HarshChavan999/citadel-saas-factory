@@ -40,7 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const mainNav = [
     { id: 'executive', label: 'Executive COO Workspace', icon: ShieldCheck, color: 'text-amber-700' },
-    { id: 'chat', label: 'Multi-Agent Q&A Console', icon: Sparkles, color: 'text-amber-600', badge: 'Claude AI' },
+    { id: 'chat', label: 'Multi-Agent Q&A Console', icon: Sparkles, color: 'text-amber-600', badge: 'AI Swarm' },
   ];
 
   const agentNav = [
@@ -73,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <h1 className="text-xs font-extrabold text-stone-900 tracking-tight truncate flex items-center gap-1.5">
                   <span>Citadel Executive</span>
                   <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-800 border border-amber-500/20 font-bold">
-                    Claude AI
+                    Autonomous AI
                   </span>
                 </h1>
                 <p className="text-[10px] text-stone-500 font-mono truncate">Multi-Agent System</p>

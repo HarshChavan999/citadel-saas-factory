@@ -1,6 +1,6 @@
 site_name: Citadel SaaS Factory
-site_url: https://docs.citadelcloudmanagement.com
-repo_url: https://github.com/Citadel-Cloud-Management/citadel-saas-factory
+site_url: https://docs.citadelmanagement.com
+repo_url: https://github.com/Citadel-Management/citadel-saas-factory
 
 theme:
   name: material

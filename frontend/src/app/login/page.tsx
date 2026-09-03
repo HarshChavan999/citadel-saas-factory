@@ -83,7 +83,7 @@ export default function LoginPage() {
               <span>Executive Sign In</span>
             </h2>
             <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-800 border border-amber-500/20">
-              Claude Light v3.1
+              Citadel OS v3.1
             </span>
           </div>
 

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const courses = [
-  { title: "Claude Agent System Engineering", slug: "claude-agent-system", modules: 10, level: "Advanced" },
+  { title: "Autonomous Agent System Engineering", slug: "agent-system", modules: 10, level: "Advanced" },
   { title: "AWS Cloud Practitioner to Solutions Architect", slug: "aws-cloud", modules: 12, level: "Beginner-Advanced" },
   { title: "Azure Cloud Engineering", slug: "azure-cloud", modules: 10, level: "Beginner-Advanced" },
   { title: "GCP Cloud Engineering", slug: "gcp-cloud", modules: 10, level: "Beginner-Advanced" },
@@ -28,7 +28,7 @@ export default function CoursesPage() {
           100% FREE
         </span>
         <h1 className="font-syne text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-cyan bg-clip-text text-transparent mb-4">
-          17 Free Cloud Courses
+          17 Free Engineering Courses
         </h1>
         <p className="text-gray2 text-lg max-w-2xl mx-auto">
           Enterprise-grade curriculum. No credit card. No paywall. Built from real production experience.

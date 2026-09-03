@@ -6,7 +6,7 @@ const path = require("path");
 
 const VERSION = "3.1.0";
 const REPO_URL =
-  "https://github.com/Citadel-Cloud-Management/citadel-saas-factory.git";
+  "https://github.com/Citadel-Management/citadel-saas-factory.git";
 
 const HELP = `
 Citadel SaaS Factory v${VERSION}
@@ -22,8 +22,8 @@ Usage:
   citadel-factory --help              Show this help
 
 Examples:
-  npx @citadel-cloud/saas-factory init my-saas
-  npx @citadel-cloud/saas-factory init .
+  npx @citadel/saas-factory init my-saas
+  npx @citadel/saas-factory init .
   cd my-saas && citadel-factory bootstrap
 `;
 

@@ -16,7 +16,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         <Link href="/" className="flex items-center gap-2">
           <span className="w-8 h-8 bg-cyan rounded-md flex items-center justify-center text-ink font-bold text-sm">C</span>
-          <span className="text-white font-semibold text-lg hidden sm:block">Citadel Cloud</span>
+          <span className="text-white font-semibold text-lg hidden sm:block">Citadel</span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (

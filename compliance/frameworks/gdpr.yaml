@@ -81,7 +81,7 @@ cross_border_transfers:
 
 data_protection_officer:
   required: "If processing special categories at scale"
-  contact: "dpo@citadelcloudmanagement.com"
+  contact: "dpo@citadelmanagement.com"
 
 breach_notification:
   authority_deadline_hours: 72

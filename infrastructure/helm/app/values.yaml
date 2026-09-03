@@ -1,7 +1,7 @@
 replicaCount: 3
 
 image:
-  repository: ghcr.io/citadel-cloud-management/citadel-saas-factory/backend
+  repository: ghcr.io/citadel-management/citadel-saas-factory/backend
   pullPolicy: IfNotPresent
   tag: "latest"
 

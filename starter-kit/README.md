@@ -46,7 +46,7 @@ make reset
 If you want *just* this starter kit without the parent framework, copy the `starter-kit/` directory to a new repository:
 
 ```bash
-git clone https://github.com/Citadel-Cloud-Management/citadel-saas-factory
+git clone https://github.com/Citadel-Management/citadel-saas-factory
 cp -r citadel-saas-factory/starter-kit my-new-project
 cd my-new-project
 cp .env.example .env

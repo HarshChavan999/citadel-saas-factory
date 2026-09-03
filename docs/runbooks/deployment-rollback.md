@@ -40,7 +40,7 @@ kubectl get pods -n production -o jsonpath='{.items[*].spec.containers[*].image}
 kubectl get pods -n production
 
 # Verify service is responding
-curl -s https://api.citadelcloudmanagement.com/health
+curl -s https://api.citadelmanagement.com/health
 ```
 
 ### Canary Abort

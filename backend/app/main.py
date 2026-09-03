@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Citadel SaaS Factory",
-    description="Cloud education and digital products platform API",
+    description="SaaS education and digital products platform API",
     version="3.0.0",
     lifespan=lifespan,
 )

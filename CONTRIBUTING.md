@@ -10,7 +10,7 @@
 ## Development Workflow
 
 ```bash
-git clone https://github.com/Citadel-Cloud-Management/citadel-saas-factory.git
+git clone https://github.com/Citadel-Management/citadel-saas-factory.git
 cd citadel-saas-factory
 cp .env.example .env
 bash scripts/setup.sh    # Verify infrastructure
@@ -44,4 +44,4 @@ To add a new skill, create `.claude/skills/<name>/SKILL.md`. See [skills docs](h
 
 ## Reporting Issues
 
-Use [GitHub Issues](https://github.com/Citadel-Cloud-Management/citadel-saas-factory/issues) with the appropriate template.
+Use [GitHub Issues](https://github.com/Citadel-Management/citadel-saas-factory/issues) with the appropriate template.
