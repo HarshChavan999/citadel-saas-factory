@@ -96,15 +96,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Enterprise Switcher */}
         {!isCollapsed && (
           <div 
-            onClick={() => onShowToast && onShowToast('Tenant Workspace: Apex Retail Co. (Single-Tenant Mode Active)')}
+            onClick={() => onShowToast && onShowToast('Tenant Workspace: Apex Mumbai Retail Pvt. Ltd. (Mumbai Active)')}
             className="p-2 rounded-xl bg-[#e8e6de] border border-[#dcd9ce] text-xs flex items-center justify-between text-stone-800 hover:border-amber-400 hover:bg-[#eae7df] transition cursor-pointer"
             title="Click to inspect active tenant organization"
           >
             <div className="flex items-center gap-2 overflow-hidden">
               <Building2 className="h-3.5 w-3.5 text-amber-700 flex-shrink-0" />
-              <span className="font-bold text-stone-900 truncate text-[11px]">Apex Retail Co.</span>
+              <span className="font-bold text-stone-900 truncate text-[11px]">Apex Mumbai Retail</span>
             </div>
-            <span className="text-[10px] text-amber-800 font-mono font-extrabold flex-shrink-0">SME</span>
+            <span className="text-[10px] text-amber-800 font-mono font-extrabold flex-shrink-0">MUMBAI</span>
           </div>
         )}
       </div>

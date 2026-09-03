@@ -50,7 +50,7 @@ export const InventoryAgentView: React.FC<InventoryAgentViewProps> = ({
         <div className="flex items-center gap-3">
           <div className="glass-card px-4 py-2 rounded-xl text-right bg-[#f8f7f2]">
             <span className="text-[10px] text-stone-500 block font-mono font-bold">DEAD CAPITAL LOCKED</span>
-            <span className="text-lg font-bold font-mono text-rose-700">${totalDeadCapital.toLocaleString()}</span>
+            <span className="text-lg font-bold font-mono text-rose-700">₹{totalDeadCapital.toLocaleString()}</span>
           </div>
           <div className="glass-card px-4 py-2 rounded-xl text-right bg-[#f8f7f2]">
             <span className="text-[10px] text-stone-500 block font-mono font-bold">CRITICAL SKUS</span>

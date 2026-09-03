@@ -51,7 +51,7 @@ export const SalesAgentView: React.FC<SalesAgentViewProps> = ({
         <div className="flex items-center gap-3">
           <div className="glass-card px-4 py-2 rounded-xl text-right bg-[#f8f7f2]">
             <span className="text-[10px] text-stone-500 block font-mono font-bold">AVG ORDER VALUE</span>
-            <span className="text-lg font-bold font-mono text-stone-900">${latestMonth.avgOrderValue.toFixed(2)}</span>
+            <span className="text-lg font-bold font-mono text-stone-900">₹{latestMonth.avgOrderValue.toFixed(2)}</span>
           </div>
           <div className="glass-card px-4 py-2 rounded-xl text-right bg-[#f8f7f2]">
             <span className="text-[10px] text-stone-500 block font-mono font-bold">AUG ORDERS</span>
@@ -84,10 +84,10 @@ export const SalesAgentView: React.FC<SalesAgentViewProps> = ({
             <ComposedChart data={salesHistory} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e6e4df" />
               <XAxis dataKey="date" stroke="#66635c" tick={{ fontSize: 12 }} />
-              <YAxis stroke="#66635c" tick={{ fontSize: 12 }} tickFormatter={(val) => `$${val / 1000}k`} />
+              <YAxis stroke="#66635c" tick={{ fontSize: 12 }} tickFormatter={(val) => `₹${(val / 100000).toFixed(1)}L`} />
               <Tooltip 
                 contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e6e4df', borderRadius: '12px', color: '#1a1917' }}
-                formatter={(val: number) => [`$${val.toLocaleString()}`, '']}
+                formatter={(val: number) => [`₹${val.toLocaleString()}`, '']}
               />
               <Bar dataKey="revenue" name="Actual Revenue" fill="#059669" radius={[4, 4, 0, 0]} barSize={28} />
               <Area type="monotone" dataKey="target" name="Target" stroke="#4f46e5" fill="none" strokeWidth={2} strokeDasharray="5 5" />
@@ -130,10 +130,10 @@ export const SalesAgentView: React.FC<SalesAgentViewProps> = ({
                       <span>{sku.name}</span>
                     </td>
                     <td className="py-3 px-3 text-stone-600">{sku.category}</td>
-                    <td className="py-3 px-3 font-mono text-stone-900 font-bold">${sku.price.toFixed(2)}</td>
-                    <td className="py-3 px-3 font-mono text-stone-600">${sku.cost.toFixed(2)}</td>
+                    <td className="py-3 px-3 font-mono text-stone-900 font-bold">₹{sku.price.toFixed(2)}</td>
+                    <td className="py-3 px-3 font-mono text-stone-600">₹{sku.cost.toFixed(2)}</td>
                     <td className="py-3 px-3 font-mono font-bold text-emerald-700">
-                      ${margin.toFixed(2)} ({marginPct}%)
+                      ₹{margin.toFixed(2)} ({marginPct}%)
                     </td>
                     <td className="py-3 px-3">
                       <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${

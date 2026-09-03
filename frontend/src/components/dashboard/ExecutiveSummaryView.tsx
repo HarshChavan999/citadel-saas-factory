@@ -135,11 +135,11 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold font-mono text-stone-900">
-              ${latestSales.revenue.toLocaleString()}
+              ₹{latestSales.revenue.toLocaleString()}
             </span>
             <span className="text-xs font-bold text-rose-600 font-mono">-23.4%</span>
           </div>
-          <p className="text-[11px] text-stone-500 font-medium">Target: ${latestSales.target.toLocaleString()}</p>
+          <p className="text-[11px] text-stone-500 font-medium">Target: ₹{latestSales.target.toLocaleString()}</p>
         </div>
 
         {/* Stockout Risk */}
@@ -174,10 +174,10 @@ export const ExecutiveSummaryView: React.FC<ExecutiveSummaryViewProps> = ({
             </span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold font-mono text-stone-900">$14,200</span>
+            <span className="text-3xl font-extrabold font-mono text-stone-900">₹11,36,000</span>
             <span className="text-xs text-emerald-700 font-mono font-bold">Safe Buffer</span>
           </div>
-          <p className="text-[11px] text-stone-500 font-medium">Logistics overrun (+$3,900)</p>
+          <p className="text-[11px] text-stone-500 font-medium">Bhiwandi freight overrun (+₹3,12,000)</p>
         </div>
       </div>
 

@@ -78,12 +78,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         <button 
           onClick={() => {
             setActiveTab('executive');
-            if (onShowToast) onShowToast('Workspace: Apex Retail Co. (Active)');
+            if (onShowToast) onShowToast('Workspace: Apex Mumbai Retail Pvt. Ltd. (Active)');
           }}
           className="flex items-center gap-1.5 text-stone-600 hover:text-stone-900 transition p-1 rounded-lg hover:bg-[#eeebe3]"
         >
           <Building2 className="h-3.5 w-3.5 text-amber-700" />
-          <span className="font-bold text-stone-800">Apex Retail Co.</span>
+          <span className="font-bold text-stone-800">Apex Mumbai Retail</span>
         </button>
         <ChevronRight className="h-3.5 w-3.5 text-stone-400" />
         <span className="font-bold text-stone-900 font-sans text-xs">
@@ -145,14 +145,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
                 <div className="overflow-hidden">
                   <h4 className="text-xs font-extrabold text-stone-900 truncate">Executive Console</h4>
-                  <p className="text-[11px] text-stone-500 font-mono truncate">demo@apexretail.com</p>
+                  <p className="text-[11px] text-stone-500 font-mono truncate">demo@mumbairetail.com</p>
                 </div>
               </div>
 
               <div className="space-y-1 text-xs">
                 <div className="p-2 rounded-xl bg-[#faf9f6] border border-[#e6e4df] flex items-center justify-between text-[11px]">
                   <span className="text-stone-600 font-medium">Active Workspace</span>
-                  <span className="font-bold text-amber-900 font-mono">Apex Retail Co.</span>
+                  <span className="font-bold text-amber-900 font-mono">Apex Mumbai Retail</span>
                 </div>
                 <div className="p-2 rounded-xl bg-[#faf9f6] border border-[#e6e4df] flex items-center justify-between text-[11px]">
                   <span className="text-stone-600 font-medium">Role Privilege</span>

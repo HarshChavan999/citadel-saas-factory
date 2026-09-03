@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wallet, DollarSign, TrendingDown, ArrowUpRight, ShieldAlert, PieChart as PieIcon } from 'lucide-react';
+import { Wallet, IndianRupee, TrendingDown, ArrowUpRight, ShieldAlert, PieChart as PieIcon } from 'lucide-react';
 import { ExpenseRecord } from '../../lib/types';
 
 interface FinanceAgentViewProps {
@@ -41,11 +41,11 @@ export const FinanceAgentView: React.FC<FinanceAgentViewProps> = ({
         <div className="flex items-center gap-3">
           <div className="glass-card px-4 py-2 rounded-xl text-right bg-[#f8f7f2]">
             <span className="text-[10px] text-stone-500 block font-mono font-bold">TOTAL EXPENSES</span>
-            <span className="text-lg font-bold font-mono text-stone-900">${totalSpent.toLocaleString()}</span>
+            <span className="text-lg font-bold font-mono text-stone-900">₹{totalSpent.toLocaleString()}</span>
           </div>
           <div className="glass-card px-4 py-2 rounded-xl text-right bg-[#f8f7f2]">
             <span className="text-[10px] text-stone-500 block font-mono font-bold">BUDGET VARIANCE</span>
-            <span className="text-lg font-bold font-mono text-rose-700">+${totalOverrun.toLocaleString()}</span>
+            <span className="text-lg font-bold font-mono text-rose-700">+₹{totalOverrun.toLocaleString()}</span>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@ export const FinanceAgentView: React.FC<FinanceAgentViewProps> = ({
       {/* Expense Variance Ledger Table */}
       <div className="glass-card p-6 rounded-2xl border border-[#e6e4df] bg-white space-y-4 shadow-xs">
         <h4 className="text-base font-bold text-stone-900 flex items-center gap-2">
-          <DollarSign className="h-5 w-5 text-indigo-700" />
+          <IndianRupee className="h-5 w-5 text-indigo-700" />
           <span>Monthly Expense Variance Ledger</span>
         </h4>
 
@@ -78,10 +78,10 @@ export const FinanceAgentView: React.FC<FinanceAgentViewProps> = ({
                   <tr key={exp.id} className="hover:bg-[#faf9f6]">
                     <td className="py-3 px-3 font-bold text-stone-900">{exp.category}</td>
                     <td className="py-3 px-3 text-stone-600 max-w-xs truncate">{exp.description}</td>
-                    <td className="py-3 px-3 font-mono font-bold text-stone-900">${exp.amount.toLocaleString()}</td>
-                    <td className="py-3 px-3 font-mono text-stone-600">${exp.budget.toLocaleString()}</td>
+                    <td className="py-3 px-3 font-mono font-bold text-stone-900">₹{exp.amount.toLocaleString()}</td>
+                    <td className="py-3 px-3 font-mono text-stone-600">₹{exp.budget.toLocaleString()}</td>
                     <td className={`py-3 px-3 font-mono font-bold ${isOver ? 'text-rose-700' : 'text-emerald-700'}`}>
-                      {isOver ? `+$${diff.toLocaleString()}` : `$${diff.toLocaleString()}`}
+                      {isOver ? `+₹${diff.toLocaleString()}` : `₹${diff.toLocaleString()}`}
                     </td>
                     <td className="py-3 px-3">
                       <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${

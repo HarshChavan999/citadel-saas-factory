@@ -24,20 +24,20 @@ OBJECTIVE: Monitor daily order velocity, SKU-level revenue contribution, and 30-
     inventory: `ROLE: Supply Chain & Inventory Operations Agent
 OBJECTIVE: Execute predictive stock depletion algorithms. Reorder SKUs when current stock breaches safety lead-time threshold. Calculate Economic Order Quantity (EOQ).`,
     finance: `ROLE: Finance & Liquidity Agent
-OBJECTIVE: Audit monthly cost center variances against budget. Maintain 30-day net cash flow buffer >$10,000. Identify compressible overheads.`,
+OBJECTIVE: Audit monthly cost center variances against budget. Maintain 30-day net cash flow buffer >₹8,00,000. Identify compressible overheads.`,
     customer: `ROLE: Customer Experience & NLP Sentiment Agent
 OBJECTIVE: Ingest unstructured WhatsApp Business messages, email tickets, and feedback forms. Extract complaint categories and flag high-risk VIP account churn.`,
     market: `ROLE: Market Intelligence Agent
-OBJECTIVE: Crawl competitor web pricing, commodity price indices (Arabica futures), and external macroeconomic category tailwinds.`
+OBJECTIVE: Crawl competitor web pricing, commodity price indices (MCX / Karnataka auctions), and external macroeconomic category tailwinds.`
   };
 
   const dataChannels: Record<string, string[]> = {
-    orchestrator: ['All 5 Specialized Agent Context Streams', 'SME Executive Ledger'],
-    sales: ['Square POS API', 'Shopify Storefront Connector', 'Historical Transaction Log'],
-    inventory: ['WMS Warehouse DB', 'Supplier Lead-Time Matrix', 'Barcoding Feed'],
-    finance: ['QuickBooks General Ledger', 'Bank Feed API', 'Payroll Ledger'],
-    customer: ['WhatsApp Business Support API', 'IMAP Customer Service Email', 'Google Reviews'],
-    market: ['Competitor Web Crawler', 'Commodity Price Index Feed', 'Regional Category Data']
+    orchestrator: ['All 5 Specialized Agent Context Streams', 'Mumbai SME Executive Ledger'],
+    sales: ['Pine Labs & BharatPe POS API', 'Shopify India / ONDC Connector', 'Historical Transaction Log'],
+    inventory: ['Bhiwandi Central WMS DB', 'Vashi APMC Lead-Time Matrix', 'Barcoding Feed'],
+    finance: ['TallyPrime & GST General Ledger', 'Bank Feed API', 'Mumbai Staff Payroll Ledger'],
+    customer: ['WhatsApp Business API (Mumbai Line)', 'Zendesk Customer Service Email', 'Google Reviews'],
+    market: ['Competitor Web Crawler (Blue Tokai)', 'MCX Commodity Index Feed', 'Mumbai Category Data']
   };
 
   return (

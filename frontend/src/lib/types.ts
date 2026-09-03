@@ -128,6 +128,7 @@ export interface ChatMessage {
   id: string;
   sender: 'user' | 'system' | 'coo';
   queryText?: string;
+  fileName?: string;
   reasoningSteps?: MultiAgentReasoningStep[];
   finalAnswer?: string;
   participatingAgents?: AgentId[];

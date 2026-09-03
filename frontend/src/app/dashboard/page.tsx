@@ -27,7 +27,8 @@ import {
 import { 
   calculateBusinessHealthScore, 
   generateAgentInsights, 
-  processNaturalLanguageQuery 
+  processNaturalLanguageQuery,
+  queryLiveGeminiAgent 
 } from '../../lib/agentEngine';
 import { 
   SKUItem, 
@@ -65,19 +66,21 @@ export default function DashboardPage() {
   const [dataSources, setDataSources] = useState(INITIAL_DATA_SOURCES);
   const [recommendations, setRecommendations] = useState<StrategicRecommendation[]>(INITIAL_STRATEGIC_RECOMMENDATIONS);
 
-  // Initial Welcome Chat Message
+  // Initial Welcome Chat Message Powered by Gemini 3.6 Flash
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome-1',
       sender: 'coo',
-      finalAnswer: `Welcome back. Your **Virtual AI Management Team** is operational across 6 connected channels.\n\nKey highlights today:\n1. **Critical Stockout**: SKU-884 (Organic Roast Coffee) has only 42 units left (3 days stock).\n2. **Logistics Overrun**: Express freight expense is +86% over budget ($8,400 spent).\n\nSelect a preset query below or ask any custom question to inspect multi-agent reasoning.`,
+      finalAnswer: `Welcome to **Apex Mumbai Retail Pvt. Ltd.** executive operations. Your **Virtual AI Management Team powered by Google Gemini 3.6 Flash** is online and grounded in real-time enterprise telemetry across all 6 business channels.\n\n### Current Telemetry Highlights:\n- **Commercial Revenue**: August revenue closed at **₹31,84,000** against ₹41,60,000 target (-23.4%).\n- **Inventory Constraint**: SKU-884 (Monsooned Malabar Arabica) is in critical depletion with only **3 days of stock remaining** (42 units).\n- **Net Operating Margin**: Operating expenses stand at **₹36,56,000** yielding an operating loss of **-₹18,02,912** against ₹11,36,000 cash reserves.\n\nAsk any question below (e.g. *"What is my net profit?"*, *"How can we eliminate shipping overruns?"*, or *"Which supplier should we reorder from?"*) to initiate live Gemini multi-agent reasoning.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       suggestedActions: [
-        { label: 'Why have sales dropped this month?', actionType: 'query', payload: { query: 'Why have sales dropped this month?' } },
-        { label: 'Which products will run out of stock next week?', actionType: 'query', payload: { query: 'Which products are likely to go out of stock next week?' } }
+        { label: 'What is my net profit & operating margins?', actionType: 'query', payload: { query: 'What is my net profit and operating margins for August?' } },
+        { label: 'Which products are likely to run out next week?', actionType: 'query', payload: { query: 'Which products are likely to go out of stock next week?' } },
+        { label: 'How can we reduce expenses this month?', actionType: 'query', payload: { query: 'What expenses can be reduced to improve liquidity?' } }
       ]
     }
   ]);
+  const [isAgentThinking, setIsAgentThinking] = useState(false);
 
   // Health score calculation
   const healthScore = calculateBusinessHealthScore(skus, salesHistory, expenses, feedbacks);
@@ -162,9 +165,9 @@ export default function DashboardPage() {
       showToast(`Flash discount activated! Stagnant stock liquidated.`);
     }
     else if (actionType === 'cut_expense') {
-      setExpenses(prev => prev.map(e => e.id === 'exp-101' ? { ...e, amount: 4500, status: 'normal' } : e));
+      setExpenses(prev => prev.map(e => e.id === 'exp-101' ? { ...e, amount: 360000, status: 'normal' } : e));
       setRecommendations(prev => prev.filter(r => r.id !== 'rec-003'));
-      showToast(`Carrier SLA updated. Express freight capped at $4,500.`);
+      showToast(`Carrier SLA updated. Bhiwandi freight capped at ₹3,60,000.`);
     }
     else if (actionType === 'contact_customer') {
       setFeedbacks(prev => prev.map(f => ({ ...f, resolutionStatus: 'resolved' })));
@@ -179,10 +182,27 @@ export default function DashboardPage() {
     }
   };
 
-  const handleSendMessage = (queryText: string) => {
-    const newMessage = processNaturalLanguageQuery(queryText, skus, salesHistory, expenses, feedbacks, signals);
-    setMessages(prev => [...prev, newMessage]);
+  const handleSendMessage = async (queryText: string, targetAgentId?: string | null) => {
     if (activeTab !== 'chat') setActiveTab('chat');
+    setIsAgentThinking(true);
+
+    try {
+      const response = await queryLiveGeminiAgent(
+        queryText,
+        skus,
+        salesHistory,
+        expenses,
+        feedbacks,
+        signals,
+        targetAgentId
+      );
+      setMessages(prev => [...prev, response]);
+    } catch (err) {
+      console.error('Gemini query error:', err);
+      showToast('Live Gemini API error. Please verify network connection.');
+    } finally {
+      setIsAgentThinking(false);
+    }
   };
 
   const handleTriggerSimulatedEvent = (eventType: string) => {
@@ -191,16 +211,16 @@ export default function DashboardPage() {
       showToast(`POS Event: +50 orders processed for SKU-884! Stock depleted.`);
     } 
     else if (eventType === 'whatsapp_complaint') {
-      const newFb: CustomerFeedback = { id: `fb-${Date.now()}`, channel: 'whatsapp', customerName: 'Metro Coffee Hub', date: 'Just now', message: 'Where is our delivery?', sentiment: 'negative', category: 'shipping', resolutionStatus: 'open' };
+      const newFb: CustomerFeedback = { id: `fb-${Date.now()}`, channel: 'whatsapp', customerName: 'Juhu Heritage Lounge', date: 'Just now', message: 'Where is our delivery consignment?', sentiment: 'negative', category: 'shipping', resolutionStatus: 'open' };
       setFeedbacks(prev => [newFb, ...prev]);
-      showToast(`Event: Urgent WhatsApp complaint received.`);
+      showToast(`Event: Urgent WhatsApp complaint received from Juhu client.`);
     } 
     else if (eventType === 'logistics_hike') {
-      setExpenses(prev => prev.map(e => e.id === 'exp-101' ? { ...e, amount: e.amount + 2200, status: 'over_budget' } : e));
-      showToast(`Event: Express freight surcharge +$2,200 logged.`);
+      setExpenses(prev => prev.map(e => e.id === 'exp-101' ? { ...e, amount: e.amount + 180000, status: 'over_budget' } : e));
+      showToast(`Event: Express freight surcharge +₹1,80,000 logged.`);
     }
     else if (eventType === 'competitor_promo') {
-      const newSig: MarketSignal = { id: `sig-${Date.now()}`, source: 'Crawler Alert', topic: 'Competitor Promo', title: 'Rival bean distributor slashed price by 25%', impactScore: -4, date: 'Today', category: 'competitor_pricing', summary: 'Under-cutting SKU-884 at $25.99/kg.' };
+      const newSig: MarketSignal = { id: `sig-${Date.now()}`, source: 'Crawler Alert', topic: 'Competitor Promo', title: 'Blue Tokai slashed coffee price by 25%', impactScore: -4, date: 'Today', category: 'competitor_pricing', summary: 'Under-cutting SKU-884 at ₹2,150/kg across Mumbai.' };
       setSignals(prev => [newSig, ...prev]);
       showToast(`Event: Market crawler detected 25% competitor price cut.`);
     }
@@ -314,6 +334,7 @@ export default function DashboardPage() {
             <MultiAgentChatConsole 
               messages={messages}
               agents={INITIAL_AGENTS}
+              isLoading={isAgentThinking}
               onSendMessage={handleSendMessage}
               onExecuteAction={handleActionClick}
             />

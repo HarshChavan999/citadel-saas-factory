@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Bot, ShieldCheck, ArrowRight, Zap, Lock, Mail } from 'lucide-react';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('demo@apexretail.com');
+  const [email, setEmail] = useState('demo@mumbairetail.com');
   const [password, setPassword] = useState('demo123456');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -54,7 +54,7 @@ export default function LoginPage() {
   }
 
   const handleDemoLogin = () => {
-    setEmail('demo@apexretail.com');
+    setEmail('demo@mumbairetail.com');
     setPassword('demo123456');
     performLogin('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.demo-executive');
   };

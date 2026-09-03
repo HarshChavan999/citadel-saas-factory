@@ -57,7 +57,7 @@ export const DataIntegrationHub: React.FC<DataIntegrationHubProps> = ({
               <ShoppingCart className="h-4 w-4 text-emerald-700" />
             </div>
             <p className="text-[11px] text-stone-600">
-              Injects +50 orders for Organic Coffee (SKU-884). Forces stock depletion date closer.
+              Injects +50 orders for Monsooned Malabar Arabica (SKU-884). Forces stock depletion date closer.
             </p>
           </button>
 
@@ -70,7 +70,7 @@ export const DataIntegrationHub: React.FC<DataIntegrationHubProps> = ({
               <MessageSquare className="h-4 w-4 text-rose-700" />
             </div>
             <p className="text-[11px] text-stone-600">
-              Injects 5 high-priority customer complaints regarding shipping delays.
+              Injects 5 high-priority customer complaints regarding Bhiwandi highway delivery delays.
             </p>
           </button>
 
@@ -83,7 +83,7 @@ export const DataIntegrationHub: React.FC<DataIntegrationHubProps> = ({
               <Wallet className="h-4 w-4 text-indigo-700" />
             </div>
             <p className="text-[11px] text-stone-600">
-              Increases express freight bill by $2,200. Triggers Finance expense alert.
+              Increases express freight bill by ₹1,80,000. Triggers Finance expense alert.
             </p>
           </button>
 
@@ -96,7 +96,7 @@ export const DataIntegrationHub: React.FC<DataIntegrationHubProps> = ({
               <Globe className="h-4 w-4 text-amber-700" />
             </div>
             <p className="text-[11px] text-stone-600">
-              Triggers market crawler signal: Competitor cut coffee price by 25%.
+              Triggers market crawler signal: Blue Tokai cut coffee price by 25% across Mumbai.
             </p>
           </button>
         </div>

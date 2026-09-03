@@ -5,7 +5,7 @@ import {
   ArrowUpRight, 
   CheckCircle2, 
   X, 
-  DollarSign, 
+  IndianRupee, 
   Clock, 
   Boxes, 
   Wallet, 
@@ -38,26 +38,26 @@ export const ActionConfirmationModal: React.FC<ActionConfirmationModalProps> = (
       icon: Boxes,
       color: 'text-amber-800',
       badgeBg: 'bg-amber-100 border-amber-200 text-amber-900',
-      capital: '$4,000 PO Expenditure',
-      impact: 'Prevents $4,830 lost revenue over next 14 days',
+      capital: '₹3,30,000 PO Expenditure',
+      impact: 'Prevents ₹3,86,400 lost revenue over next 14 days',
       riskReduction: '95% reduction in stockout churn risk'
     },
     discount: {
       category: 'DEAD STOCK LIQUIDATION',
-      icon: DollarSign,
+      icon: IndianRupee,
       color: 'text-emerald-800',
       badgeBg: 'bg-emerald-100 border-emerald-200 text-emerald-900',
-      capital: '$0 Capital Required',
-      impact: 'Reclaims ~$2,808 in stagnant working capital',
-      riskReduction: 'Frees 12% warehouse shelf space'
+      capital: '₹0 Capital Required',
+      impact: 'Reclaims ~₹2,26,800 in stagnant working capital',
+      riskReduction: 'Frees 12% warehouse shelf space in Bhiwandi'
     },
     cut_expense: {
       category: 'COST CENTER OPTIMIZATION',
       icon: Wallet,
       color: 'text-indigo-800',
       badgeBg: 'bg-indigo-100 border-indigo-200 text-indigo-900',
-      capital: '$0 Cost',
-      impact: 'Saves ~$3,900/month in logistics surcharges',
+      capital: '₹0 Cost',
+      impact: 'Saves ~₹3,12,000/month in freight surcharges',
       riskReduction: 'Protects operating cash flow buffer'
     },
     contact_customer: {
@@ -65,8 +65,8 @@ export const ActionConfirmationModal: React.FC<ActionConfirmationModalProps> = (
       icon: MessageSquare,
       color: 'text-purple-800',
       badgeBg: 'bg-purple-100 border-purple-200 text-purple-900',
-      capital: '$150 Credit Voucher Budget',
-      impact: 'Protects 3 VIP commercial wholesale accounts ($14k ARR)',
+      capital: '₹12,000 Credit Voucher Budget',
+      impact: 'Protects 3 VIP commercial wholesale accounts (₹11.2L ARR)',
       riskReduction: 'Restores CSAT score by +12 points'
     }
   }[actionType] || {

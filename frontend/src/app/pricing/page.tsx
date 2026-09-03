@@ -1,21 +1,21 @@
 const tiers = [
   {
-    name: "Free", price: "$0", period: "forever", highlight: false,
+    name: "Free", price: "₹0", period: "forever", highlight: false,
     features: ["17 free courses", "Community access", "6 skill tracks", "Free resources"],
     cta: "Start Free", href: "/register",
   },
   {
-    name: "Starter", price: "$29", period: "/month", highlight: false,
+    name: "Starter", price: "₹2,499", period: "/month", highlight: false,
     features: ["Individual toolkits", "Basic support", "Curated resources", "Email support"],
     cta: "Get Starter", href: "https://buy.stripe.com/fZu9AU7VD1OydmVfTS0co03",
   },
   {
-    name: "Professional", price: "$79", period: "/month", highlight: true,
+    name: "Professional", price: "₹6,499", period: "/month", highlight: true,
     features: ["Full catalog (320+)", "Priority support", "All courses + tracks", "New releases first"],
     cta: "Go Professional", href: "https://buy.stripe.com/fZueVe5NvgJs4Qp3760co04",
   },
   {
-    name: "Enterprise", price: "$297", period: "/month", highlight: false,
+    name: "Enterprise", price: "₹24,999", period: "/month", highlight: false,
     features: ["Team licenses", "Custom content", "Dedicated support", "SLA-backed"],
     cta: "Contact Sales", href: "https://buy.stripe.com/eVqdRa0tb1Oy96F4ba0co05",
   },
